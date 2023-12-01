@@ -65,7 +65,7 @@ const AppTable: React.FC<BasicTableProps> = ({ data, onAppSelect }) => {
               <TableCell component="th" scope="row" style={{ color: "white" }}>
                 {row.id}
               </TableCell>
-              <TableCell component="th" scope="row" style={{ color: "white" }}>
+              <TableCell align="right" style={{ color: "white" }}>
                 {row.name}
               </TableCell>
             </TableRow>
