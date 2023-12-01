@@ -1,7 +1,7 @@
 
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <div> Podstawy Kryptografii i Kodowania - sekcja XXX &copy; 12/2023</div>
   )
 }
 

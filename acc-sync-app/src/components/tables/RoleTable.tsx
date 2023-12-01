@@ -46,13 +46,13 @@ const RoleTable: React.FC<BasicTableProps> = ({ data, onRoleSelect }) => {
         <TableHead>
           <TableRow>
             <TableCell style={{ color: "white" }}>
-              ID
+              Id roli
             </TableCell>
             <TableCell align="right" style={{ color: "white" }}>
-              Name
+              Nazwa roli
             </TableCell>
             <TableCell align="right" style={{ color: "white" }}>
-              App_Id
+              Id aplikacji
             </TableCell>
           </TableRow>
         </TableHead>
@@ -69,7 +69,7 @@ const RoleTable: React.FC<BasicTableProps> = ({ data, onRoleSelect }) => {
               <TableCell component="th" scope="row" style={{ color: "white" }}>
                 {row.id}
               </TableCell>
-              <TableCell component="th" scope="row" style={{ color: "white" }}>
+              <TableCell align="right" style={{ color: "white" }}>
                 {row.name}
               </TableCell>
               <TableCell align="right" style={{ color: "white" }}>

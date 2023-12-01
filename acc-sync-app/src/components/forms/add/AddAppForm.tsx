@@ -29,7 +29,12 @@ const AddAppForm: React.ElementType<AddAppFormProps> = ({ onSubmit }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  const handleBack = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (onSubmit) {
+      onSubmit(formData.name);
+    }
+  };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const token: string | null = localStorage.getItem("accessToken");
@@ -48,15 +53,14 @@ const AddAppForm: React.ElementType<AddAppFormProps> = ({ onSubmit }) => {
         return;
       }
       await api.apiAppsNamePost(token, { name: formData.name });
-
-      if (onSubmit) {
-        onSubmit(formData.name);
-      }
+      navigate(0);
     } catch (error) {
       console.error("Wystąpił błąd:", error);
     } finally {
       setIsLoading(false);
-      navigate(0);
+    }
+    if (onSubmit) {
+      onSubmit(formData.name);
     }
   };
 
@@ -65,7 +69,7 @@ const AddAppForm: React.ElementType<AddAppFormProps> = ({ onSubmit }) => {
       onSubmit={handleSubmit}
       className="max-w-3xl bg-zinc-700 h-screen flex items-center justify-center gap-5 p-3 flex-col"
     >
-      <h1>Dodaj rolę</h1>
+      <h1>Dodaj Aplikację</h1>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -81,6 +85,16 @@ const AddAppForm: React.ElementType<AddAppFormProps> = ({ onSubmit }) => {
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary" fullWidth>
             {isLoading ? <CircularProgress /> : "Dodaj Aplikację"}
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            onClick={(e) => handleBack(e)}
+            variant="contained"
+            color="error"
+            fullWidth
+          >
+            Anuluj
           </Button>
         </Grid>
       </Grid>

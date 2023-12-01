@@ -7,14 +7,14 @@ interface EditButtonProps {
   formComponent: React.ElementType<EditRoleFormProps>;
   onSubmit?: () => void;
   children: string;
-  data: RoleDTO //lub inne
+  data: RoleDTO; //lub inne
 }
 
 const EditRoleButton: React.FC<EditButtonProps> = ({
   formComponent: FormComponent,
   onSubmit,
   children,
-  data
+  data,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -45,24 +45,18 @@ const EditRoleButton: React.FC<EditButtonProps> = ({
           height: "100%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
         open={open}
         onClose={handleClose}
       >
-        <div className="">
-          {/* Renderowanie dynamicznego formularza dla każdej podstrony */}
-          <FormComponent
-            onSubmit={() => {
-              handleSubmit();
-              handleClose;
-            }}
-            data={data}
-          />
-          {/* Dodaj przycisk do wysyłania danych */}
-          <Button onClick={handleSubmit}>Zapisz</Button>
-          <Button onClick={handleClose}>Anuluj</Button>
-        </div>
+        <FormComponent
+          onSubmit={() => {
+            handleSubmit();
+            handleClose;
+          }}
+          data={data}
+        />
       </Modal>
     </>
   );

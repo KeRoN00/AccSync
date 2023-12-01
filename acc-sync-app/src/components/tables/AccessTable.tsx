@@ -47,21 +47,21 @@ const AccessTable: React.FC<BasicTableProps> = ({ data, onAccessSelect }) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell style={{ color: "white" }}>ID</TableCell>
+            <TableCell style={{ color: "white" }}>Id uprawnienia</TableCell>
             <TableCell align="right" style={{ color: "white" }}>
-              userID
+              Id użytkownika
             </TableCell>
             <TableCell align="right" style={{ color: "white" }}>
               Nazwa użytkownika
             </TableCell>
             <TableCell align="right" style={{ color: "white" }}>
-              roleID
+              Id roli
             </TableCell>
             <TableCell align="right" style={{ color: "white" }}>
               Nazwa roli
             </TableCell>
             <TableCell align="right" style={{ color: "white" }}>
-              appID
+              Id aplikacji
             </TableCell>
           </TableRow>
         </TableHead>

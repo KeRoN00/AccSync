@@ -47,19 +47,24 @@ const DeleteUserButton: React.FC<DeleteButtonProps> = ({
         <DeleteOutlineIcon />
         {children}
       </Button>
-      <Modal open={open} onClose={handleClose}>
-     
-        <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
         <FormComponent
-            onSubmit={() => {
-              handleSubmit();
-              handleClose;
-            }}
-            id={data}
-          />
-          {/* Renderowanie dynamicznego formularza dla każdej podstrony */}
-          <Button onClick={handleClose}>Zamknij</Button>
-        </div>
+          onSubmit={() => {
+            handleSubmit();
+            handleClose;
+          }}
+          id={data}
+        />
       </Modal>
     </>
   );

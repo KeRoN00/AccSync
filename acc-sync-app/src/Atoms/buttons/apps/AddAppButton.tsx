@@ -51,23 +51,17 @@ const AddAppButton: React.FC<AddButtonProps> = ({
           height: "100%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
         open={open}
         onClose={handleClose}
       >
-        <div className="">
-          {/* Renderowanie dynamicznego formularza dla każdej podstrony */}
-          <FormComponent
-            onSubmit={() => {
-              handleSubmit();
-              handleClose;
-            }}
-          />
-          {/* Dodaj przycisk do wysyłania danych */}
-          <Button onClick={handleSubmit}>Zapisz</Button>
-          <Button onClick={handleClose}>Anuluj</Button>
-        </div>
+        <FormComponent
+          onSubmit={() => {
+            handleSubmit();
+            handleClose;
+          }}
+        />
       </Modal>
     </>
   );

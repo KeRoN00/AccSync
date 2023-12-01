@@ -51,19 +51,17 @@ const Accesses = () => {
   return (
     <Layout user="admin">
       <h1 className="p-4">Uprawnienia</h1>
-      <div className="p-4">
-      <AddAccessButton formComponent={AddAccessForm}>Dodaj</AddAccessButton>
-        {/**
-         * 
-  <EditAppButton
-    formComponent={EditAppForm}
-    data={selectedApp}
-  >
-    Edytuj
-  </EditAppButton>
-*/}
-<DeleteAccessButton formComponent={DeleteAccessForm} data={selectedAccess.id}>Usuń</DeleteAccessButton>
         {error && error}
+      <div className="p-4 flex gap-3">
+        <AddAccessButton formComponent={AddAccessForm}>Dodaj</AddAccessButton>
+        <DeleteAccessButton
+          formComponent={DeleteAccessForm}
+          data={selectedAccess.id}
+        >
+          Usuń
+        </DeleteAccessButton>
+      </div>
+      <div className="flex items-center justify-center">
         {isLoading ? (
           <CircularProgress />
         ) : responseData ? (
@@ -74,7 +72,6 @@ const Accesses = () => {
         ) : (
           <div>Brak Danych</div>
         )}
-        
       </div>
     </Layout>
   );

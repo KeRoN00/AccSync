@@ -4,10 +4,10 @@ import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
-import { AccessDTO, AccessesApi, CreateAccessDTO } from "../../../api";
+import { AccessesApi, CreateAccessDTO } from "../../../api";
 
 export interface AddAccessFormProps {
-  onSubmit: (formData: AccessDTO) => void;
+  onSubmit: () => void;
 }
 const initialFormData = {
   id: 99999999,
@@ -37,7 +37,12 @@ const AddAccessForm: React.ElementType<AddAccessFormProps> = ({ onSubmit }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  const handleBack = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (onSubmit) {
+      onSubmit();
+    }
+  };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const token: string | null = localStorage.getItem("accessToken");
@@ -60,17 +65,16 @@ const AddAccessForm: React.ElementType<AddAccessFormProps> = ({ onSubmit }) => {
         navigate("/");
         return;
       }
-      console.log("Przed request", formattedAccess);
       await api.apiAccessesPost(token, { createAccessDTO: formattedAccess });
-
-      if (onSubmit) {
-        onSubmit(formattedAccess);
-      }
+      
+      navigate(0);
     } catch (error) {
       console.error("Wystąpił błąd:", error);
     } finally {
       setIsLoading(false);
-      //navigate(0);
+    }
+    if (onSubmit) {
+      onSubmit();
     }
   };
 
@@ -81,7 +85,7 @@ const AddAccessForm: React.ElementType<AddAccessFormProps> = ({ onSubmit }) => {
     >
       <h1>Dodaj Uprawnienie</h1>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <TextField
             label="Id użytkownika"
             name="userId"
@@ -92,7 +96,7 @@ const AddAccessForm: React.ElementType<AddAccessFormProps> = ({ onSubmit }) => {
             sx={{ input: { color: "white" } }}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <TextField
             label="Id roli"
             name="roleId"
@@ -103,7 +107,7 @@ const AddAccessForm: React.ElementType<AddAccessFormProps> = ({ onSubmit }) => {
             sx={{ input: { color: "white" } }}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <TextField
             label="Id aplikacji"
             name="appId"
@@ -117,6 +121,16 @@ const AddAccessForm: React.ElementType<AddAccessFormProps> = ({ onSubmit }) => {
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary" fullWidth>
             {isLoading ? <CircularProgress /> : "Dodaj Uprawnienie"}
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            onClick={(e) => handleBack(e)}
+            variant="contained"
+            color="error"
+            fullWidth
+          >
+            Anuluj
           </Button>
         </Grid>
       </Grid>

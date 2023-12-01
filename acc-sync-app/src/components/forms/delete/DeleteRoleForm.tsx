@@ -25,17 +25,17 @@ const DeleteRoleForm: React.FC<DeleteRoleFormProps> = ({ onSubmit, id }) => {
     
     try {
       const api = new RolesApi();
-      if(!id) return;
+      if(!id || id == 99999999) return;
       await api.apiRolesIdDelete(token, { id: id });
       if (onSubmit) {
         onSubmit();
       }
+      navigate(0);
     } catch (error) {
       console.error('Wystąpił błąd:', error);
       setError("Błąd podczas usuwania, sprawdź, czy zaznaczyłeś rolę na liście");
     } finally {
       setIsLoading(false);
-      navigate(0);
     }
    
   };

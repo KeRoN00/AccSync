@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AddRoleButton from "../Atoms/buttons/roles/AddRoleButton";
 import EditRoleButton from "../Atoms/buttons/roles/EditRoleButton";
 import DeleteRoleButton from "../Atoms/buttons/roles/DeleteRoleButton";
 import Layout from "./Layout";
 import CircularProgress from "@mui/material/CircularProgress";
-import { RoleDTO, RolesApi } from '../api';
-import AddRoleForm from './forms/add/AddRoleForm';
-import EditRoleForm from './forms/edit/EditRoleForm';
-import RolesTable from './tables/RoleTable';
-import DeleteRoleForm from './forms/delete/DeleteRoleForm';
+import { RoleDTO, RolesApi } from "../api";
+import AddRoleForm from "./forms/add/AddRoleForm";
+import EditRoleForm from "./forms/edit/EditRoleForm";
+import RolesTable from "./tables/RoleTable";
+import DeleteRoleForm from "./forms/delete/DeleteRoleForm";
 const Roles = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [responseData, setResponseData] = useState<Array<RoleDTO>>([]);
-  const token: string | null = localStorage.getItem('accessToken');
+  const token: string | null = localStorage.getItem("accessToken");
   const [selectedRole, setSelectedRole] = useState<RoleDTO>({
     id: 99999999,
     name: "",
@@ -29,7 +29,7 @@ const Roles = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!token) {
-        navigate('/');
+        navigate("/");
         return;
       }
       setIsLoading(true);
@@ -50,20 +50,23 @@ const Roles = () => {
     <Layout user="admin">
       <h1 className="p-4">Role</h1>
       {error && error}
-      {isLoading ? <CircularProgress /> : responseData ? <RolesTable onRoleSelect={handleSelectRole} data={responseData} /> : <div>Brak Danych</div>}
-
-      <AddRoleButton formComponent={AddRoleForm}>Dodaj</AddRoleButton>
-
-      <EditRoleButton
-        formComponent={EditRoleForm}
-        data={selectedRole}
-      >
-        Edytuj
-      </EditRoleButton>
-
-      <DeleteRoleButton formComponent={DeleteRoleForm} data={selectedRole.id}>Usuń</DeleteRoleButton>
-
-      <div className="p-4">
+      <div className="p-4 flex gap-3">
+        <AddRoleButton formComponent={AddRoleForm}>Dodaj</AddRoleButton>
+        <EditRoleButton formComponent={EditRoleForm} data={selectedRole}>
+          Edytuj
+        </EditRoleButton>
+        <DeleteRoleButton formComponent={DeleteRoleForm} data={selectedRole.id}>
+          Usuń
+        </DeleteRoleButton>
+      </div>
+      <div className="flex items-center justify-center">
+      {isLoading ? (
+        <CircularProgress />
+      ) : responseData ? (
+        <RolesTable onRoleSelect={handleSelectRole} data={responseData} />
+      ) : (
+        <div>Brak Danych</div>
+      )}
       </div>
     </Layout>
   );

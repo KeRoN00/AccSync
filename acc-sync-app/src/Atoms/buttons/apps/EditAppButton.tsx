@@ -7,14 +7,14 @@ interface EditButtonProps {
   formComponent: React.ElementType<EditAppFormProps>;
   onSubmit?: () => void;
   children: string;
-  data: AppDTO //lub inne
+  data: AppDTO; //lub inne
 }
 
 const EditAppButton: React.FC<EditButtonProps> = ({
   formComponent: FormComponent,
   onSubmit,
   children,
-  data
+  data,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -45,24 +45,18 @@ const EditAppButton: React.FC<EditButtonProps> = ({
           height: "100%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
         open={open}
         onClose={handleClose}
       >
-        <div className="">
-          {/* Renderowanie dynamicznego formularza dla każdej podstrony */}
-          <FormComponent
-            onSubmit={() => {
-              handleSubmit();
-              handleClose;
-            }}
-            data={data}
-          />
-          {/* Dodaj przycisk do wysyłania danych */}
-          <Button onClick={handleSubmit}>Zapisz</Button>
-          <Button onClick={handleClose}>Anuluj</Button>
-        </div>
+        <FormComponent
+          onSubmit={() => {
+            handleSubmit();
+            handleClose;
+          }}
+          data={data}
+        />
       </Modal>
     </>
   );

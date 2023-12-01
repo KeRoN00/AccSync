@@ -28,7 +28,7 @@ const DeleteAccessForm: React.FC<DeleteAccessFormProps> = ({
 
     try {
       const api = new AccessesApi();
-      if (!id) return;
+      if (!id || id == 99999999) return;
       await api.apiAccessesIdDelete(token, { id: id });
       if (onSubmit) {
         onSubmit();
@@ -56,16 +56,16 @@ const DeleteAccessForm: React.FC<DeleteAccessFormProps> = ({
       className="max-w-3xl bg-zinc-700 h-screen flex items-center justify-center gap-5 p-3 flex-col"
     >
       <h1>Czy napewno chcesz usunąć uprawnienie?</h1>
+      <Button type="submit" variant="contained" color="primary" fullWidth>
+        {isLoading ? <CircularProgress /> : "Usuń"}
+      </Button>
       <Button
         onClick={(e) => handleBack(e)}
         variant="contained"
-        color="primary"
+        color="error"
         fullWidth
       >
         Anuluj
-      </Button>
-      <Button type="submit" variant="contained" color="error" fullWidth>
-        {isLoading ? <CircularProgress /> : "Usuń"}
       </Button>
 
       {error && error}

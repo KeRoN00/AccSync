@@ -25,17 +25,17 @@ const DeleteAppForm: React.FC<DeleteAppFormProps> = ({ onSubmit, id }) => {
     
     try {
       const api = new AppsApi();
-      if(!id) return;
+      if(!id || id == 99999999) return;
       await api.apiAppsIdDelete(token, { id: id });
       if (onSubmit) {
         onSubmit();
       }
+      navigate(0);
     } catch (error) {
       console.error('Wystąpił błąd:', error);
       setError("Błąd podczas usuwania, sprawdź, czy zaznaczyłeś aplikację na liście");
     } finally {
       setIsLoading(false);
-      navigate(0);
     }
    
   };
