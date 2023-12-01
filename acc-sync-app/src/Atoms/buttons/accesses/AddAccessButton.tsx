@@ -1,20 +1,18 @@
 import { Button, Modal } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { ReactEventHandler, useState } from "react";
-import { EditUserFormProps } from "../forms/edit/EditUserForm";
-import { UserDTO } from "../types/User";
-interface EditButtonProps {
-  formComponent: React.ElementType<EditUserFormProps>;
+import { AddAccessFormProps } from "../../../components/forms/add/AddAccessForm";
+
+interface AddButtonProps {
+  formComponent: React.ElementType<AddAccessFormProps>;
   onSubmit?: () => void;
   children: string;
-  data: UserDTO //lub inne
 }
 
-const EditButton: React.FC<EditButtonProps> = ({
+const AddAccessButton: React.FC<AddButtonProps> = ({
   formComponent: FormComponent,
   onSubmit,
   children,
-  data
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -25,6 +23,7 @@ const EditButton: React.FC<EditButtonProps> = ({
   const handleClose: ReactEventHandler = () => {
     setOpen(false);
   };
+
   const handleSubmit = () => {
     // Wywołaj funkcję onSubmit przekazaną jako prop
     if (onSubmit) {
@@ -35,8 +34,16 @@ const EditButton: React.FC<EditButtonProps> = ({
   };
   return (
     <>
-      <Button variant="contained" onClick={handleOpen}>
-        <EditIcon />
+      <Button
+        variant="contained"
+        onClick={handleOpen}
+        sx={{
+          backgroundColor: "green",
+          color: "white",
+          "&:hover": { backgroundColor: "darkgreen" },
+        }}
+      >
+        <AddOutlinedIcon />
         {children}
       </Button>
       <Modal
@@ -57,7 +64,6 @@ const EditButton: React.FC<EditButtonProps> = ({
               handleSubmit();
               handleClose;
             }}
-            data={data}
           />
           {/* Dodaj przycisk do wysyłania danych */}
           <Button onClick={handleSubmit}>Zapisz</Button>
@@ -68,4 +74,4 @@ const EditButton: React.FC<EditButtonProps> = ({
   );
 };
 
-export default EditButton;
+export default AddAccessButton;

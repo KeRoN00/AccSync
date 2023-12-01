@@ -1,14 +1,14 @@
 import { Button, Modal } from "@mui/material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { ReactEventHandler, useState } from "react";
-import { AddUserFormProps } from "../forms/add/AddUserForm";
+import { AddAppFormProps } from "../../../components/forms/add/AddAppForm";
 interface AddButtonProps {
-  formComponent: React.ElementType<AddUserFormProps>;
+  formComponent: React.ElementType<AddAppFormProps>;
   onSubmit?: () => void;
   children: string;
 }
 
-const AddButton: React.FC<AddButtonProps> = ({
+const AddAppButton: React.FC<AddButtonProps> = ({
   formComponent: FormComponent,
   onSubmit,
   children,
@@ -73,4 +73,4 @@ const AddButton: React.FC<AddButtonProps> = ({
   );
 };
 
-export default AddButton;
+export default AddAppButton;

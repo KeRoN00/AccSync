@@ -42,7 +42,7 @@ export class RolesApi extends runtime.BaseAPI {
     /**
      * Get all roles
      */
-    async apiRolesGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RoleDTO>>> {
+    async apiRolesGetRaw(token: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RoleDTO>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -54,7 +54,10 @@ export class RolesApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Roles`,
             method: 'GET',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
         }, initOverrides);
 
@@ -64,15 +67,15 @@ export class RolesApi extends runtime.BaseAPI {
     /**
      * Get all roles
      */
-    async apiRolesGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<RoleDTO>> {
-        const response = await this.apiRolesGetRaw(initOverrides);
+    async apiRolesGet(token: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<RoleDTO>> {
+        const response = await this.apiRolesGetRaw(token, initOverrides);
         return await response.value();
     }
 
     /**
      * Delete role by id
      */
-    async apiRolesIdDeleteRaw(requestParameters: ApiRolesIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async apiRolesIdDeleteRaw(token: string,requestParameters: ApiRolesIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling apiRolesIdDelete.');
         }
@@ -88,7 +91,10 @@ export class RolesApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Roles/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
         }, initOverrides);
 
@@ -98,14 +104,14 @@ export class RolesApi extends runtime.BaseAPI {
     /**
      * Delete role by id
      */
-    async apiRolesIdDelete(requestParameters: ApiRolesIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiRolesIdDeleteRaw(requestParameters, initOverrides);
+    async apiRolesIdDelete(token: string, requestParameters: ApiRolesIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiRolesIdDeleteRaw(token, requestParameters, initOverrides);
     }
 
     /**
      * Add new role
      */
-    async apiRolesPostRaw(requestParameters: ApiRolesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async apiRolesPostRaw(token: string,requestParameters: ApiRolesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -119,7 +125,10 @@ export class RolesApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Roles`,
             method: 'POST',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
             body: RoleDTOToJSON(requestParameters.roleDTO),
         }, initOverrides);
@@ -130,15 +139,15 @@ export class RolesApi extends runtime.BaseAPI {
     /**
      * Add new role
      */
-    async apiRolesPost(requestParameters: ApiRolesPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.apiRolesPostRaw(requestParameters, initOverrides);
+    async apiRolesPost(token: string,requestParameters: ApiRolesPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.apiRolesPostRaw(token,requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Update role name
      */
-    async apiRolesPutRaw(requestParameters: ApiRolesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async apiRolesPutRaw(token: string, requestParameters: ApiRolesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -152,19 +161,22 @@ export class RolesApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Roles`,
             method: 'PUT',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
             body: RoleDTOToJSON(requestParameters.roleDTO),
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
      * Update role name
      */
-    async apiRolesPut(requestParameters: ApiRolesPutRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiRolesPutRaw(requestParameters, initOverrides);
+    async apiRolesPut(token: string, requestParameters: ApiRolesPutRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiRolesPutRaw(token, requestParameters, initOverrides);
     }
 
 }

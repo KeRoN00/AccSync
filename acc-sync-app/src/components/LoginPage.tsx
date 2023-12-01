@@ -1,5 +1,5 @@
 import { Input, Button } from "@mui/material";
-import  CircularProgress  from "@mui/material/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UsersApi } from "../api";
@@ -23,16 +23,13 @@ const LoginPage = () => {
         loginDTO: { username: login, password: password },
       });
       const token = response as string;
-      console.log(token);
-      localStorage.setItem("accessToken", token);
-
-      if (login === "Admin" && password === "admin") {
-        navigate("/admin-dashboard");
+      if (token) {
+        localStorage.setItem("accessToken", token);
+        navigate("/audits");
       } else {
-        navigate("/user-dashboard");
+        navigate(0);
       }
     } catch (error) {
-      console.error("Wystąpił błąd:", error);
       setError("Login i/lub hasło są niepoprawne lub użytkownik nie istnieje");
     } finally {
       setIsLoading(false);

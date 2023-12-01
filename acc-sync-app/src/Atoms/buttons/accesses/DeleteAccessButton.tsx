@@ -2,15 +2,15 @@ import { Button, Modal } from "@mui/material";
 
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useState } from "react";
-import { DeleteUserFormProps } from "../forms/delete/DeleteUserForm";
+import { DeleteAccessFormProps } from "../../../components/forms/delete/DeleteAccessForm";
 type DeleteButtonProps = {
   children: string;
-  formComponent: React.ElementType<DeleteUserFormProps>;
+  formComponent: React.ElementType<DeleteAccessFormProps>;
   onSubmit?: () => void;
   data: number | undefined; //lub inne
 };
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({
+const DeleteAccessButton: React.FC<DeleteButtonProps> = ({
   formComponent: FormComponent,
   onSubmit,
   children,
@@ -65,4 +65,4 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
   );
 };
 
-export default DeleteButton;
+export default DeleteAccessButton;

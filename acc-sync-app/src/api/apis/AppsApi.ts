@@ -42,7 +42,7 @@ export class AppsApi extends runtime.BaseAPI {
     /**
      * Get all application
      */
-    async apiAppsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AppDTO>>> {
+    async apiAppsGetRaw(token: string,initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AppDTO>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -54,7 +54,10 @@ export class AppsApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Apps`,
             method: 'GET',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
         }, initOverrides);
 
@@ -64,15 +67,15 @@ export class AppsApi extends runtime.BaseAPI {
     /**
      * Get all application
      */
-    async apiAppsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AppDTO>> {
-        const response = await this.apiAppsGetRaw(initOverrides);
+    async apiAppsGet(token: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AppDTO>> {
+        const response = await this.apiAppsGetRaw(token,initOverrides);
         return await response.value();
     }
 
     /**
      * Delete app by id
      */
-    async apiAppsIdDeleteRaw(requestParameters: ApiAppsIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async apiAppsIdDeleteRaw(token: string, requestParameters: ApiAppsIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling apiAppsIdDelete.');
         }
@@ -88,7 +91,10 @@ export class AppsApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Apps/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
         }, initOverrides);
 
@@ -98,14 +104,14 @@ export class AppsApi extends runtime.BaseAPI {
     /**
      * Delete app by id
      */
-    async apiAppsIdDelete(requestParameters: ApiAppsIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiAppsIdDeleteRaw(requestParameters, initOverrides);
+    async apiAppsIdDelete(token: string,requestParameters: ApiAppsIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiAppsIdDeleteRaw(token, requestParameters, initOverrides);
     }
 
     /**
      * Add new app
      */
-    async apiAppsNamePostRaw(requestParameters: ApiAppsNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async apiAppsNamePostRaw(token: string,requestParameters: ApiAppsNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
         if (requestParameters.name === null || requestParameters.name === undefined) {
             throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling apiAppsNamePost.');
         }
@@ -121,7 +127,10 @@ export class AppsApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Apps/{name}`.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters.name))),
             method: 'POST',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
         }, initOverrides);
 
@@ -131,15 +140,15 @@ export class AppsApi extends runtime.BaseAPI {
     /**
      * Add new app
      */
-    async apiAppsNamePost(requestParameters: ApiAppsNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.apiAppsNamePostRaw(requestParameters, initOverrides);
+    async apiAppsNamePost(token: string,requestParameters: ApiAppsNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.apiAppsNamePostRaw(token,requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Update existing app
      */
-    async apiAppsPutRaw(requestParameters: ApiAppsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async apiAppsPutRaw(token: string,requestParameters: ApiAppsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -153,7 +162,10 @@ export class AppsApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Apps`,
             method: 'PUT',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
             body: AppDTOToJSON(requestParameters.appDTO),
         }, initOverrides);
@@ -164,8 +176,8 @@ export class AppsApi extends runtime.BaseAPI {
     /**
      * Update existing app
      */
-    async apiAppsPut(requestParameters: ApiAppsPutRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiAppsPutRaw(requestParameters, initOverrides);
+    async apiAppsPut(token: string, requestParameters: ApiAppsPutRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiAppsPutRaw(token,requestParameters, initOverrides);
     }
 
 }

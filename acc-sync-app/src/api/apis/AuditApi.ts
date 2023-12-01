@@ -29,7 +29,7 @@ export class AuditApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiAuditGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AuditDTO>>> {
+    async apiAuditGetRaw(token: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AuditDTO>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -41,7 +41,10 @@ export class AuditApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Audit`,
             method: 'GET',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
         }, initOverrides);
 
@@ -50,8 +53,8 @@ export class AuditApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiAuditGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AuditDTO>> {
-        const response = await this.apiAuditGetRaw(initOverrides);
+    async apiAuditGet(token: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AuditDTO>> {
+        const response = await this.apiAuditGetRaw(token, initOverrides);
         return await response.value();
     }
 

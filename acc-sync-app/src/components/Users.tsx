@@ -1,15 +1,13 @@
-import BasicTable from "./BasicTable";
+import UserTable from "./tables/UserTable";
 import Layout from "./Layout";
-import AddButton from "../Atoms/AddButton";
-import DeleteButton from "../Atoms/DeleteButton";
-import EditButton from "../Atoms/EditButton";
-import AddUserForm from "../forms/add/AddUserForm";
-import EditUserForm from "../forms/edit/EditUserForm";
+import AddUserButton from "../Atoms/buttons/users/AddUserButton";
+import DeleteUserButton from "../Atoms/buttons/users/DeleteUserButton";
+import AddUserForm from "./forms/add/AddUserForm";
 import { useState, useEffect } from "react";
 import {UserDTO} from '../api/models/UserDTO'
 import {UsersApi} from '../api'
 import  CircularProgress  from "@mui/material/CircularProgress";
-import DeleteUserForm from "../forms/delete/DeleteUserForm";
+import DeleteUserForm from "./forms/delete/DeleteUserForm";
 import { useNavigate } from "react-router-dom";
 
 
@@ -19,7 +17,17 @@ const Users = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [responseData, setResponseData] = useState<Array<UserDTO>>([]);
   const token: string | null = localStorage.getItem('accessToken');
-  
+  const [selectedUser, setSelectedUser] = useState<UserDTO>({
+    id: 999999999,
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
+  const handleSelectUser = (user: UserDTO) => {
+    setSelectedUser(user);
+    console.log("Users", user);
+  };
   useEffect(() => {
     const fetchData = async () => {
       if (!token) {
@@ -41,19 +49,9 @@ const Users = () => {
   };
 
     fetchData();
-  }, [token, navigate,]);
+  }, [token, navigate]);
   
-  const [selectedUser, setSelectedUser] = useState<UserDTO>({
-    id: 999999999,
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
-
-  const handleSelectUser = (user: UserDTO) => {
-    setSelectedUser(user);
-    console.log("Users", user);
-  };
+  
 
   
 
@@ -63,17 +61,11 @@ const Users = () => {
       <div className="p-4">
         
         {error && error}
-        {isLoading ? <CircularProgress/> : responseData ? <BasicTable onUserSelect={handleSelectUser} data={responseData}/> : <div>Brak Danych</div>}
+        {isLoading ? <CircularProgress/> : responseData ? <UserTable onUserSelect={handleSelectUser} data={responseData}/> : <div>Brak Danych</div>}
         
  
-        <AddButton formComponent={AddUserForm}>Dodaj</AddButton>
-        <EditButton
-          formComponent={EditUserForm}
-          data={selectedUser}
-        >
-          Edytuj
-        </EditButton>
-        <DeleteButton formComponent={DeleteUserForm} data={selectedUser.id}>Usuń</DeleteButton>
+        <AddUserButton formComponent={AddUserForm}>Dodaj</AddUserButton>
+        <DeleteUserButton formComponent={DeleteUserForm} data={selectedUser.id}>Usuń</DeleteUserButton>
          
       </div>
     </Layout>

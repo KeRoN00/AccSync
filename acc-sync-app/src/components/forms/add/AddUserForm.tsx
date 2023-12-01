@@ -4,8 +4,8 @@ import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
-import { UserDTO, UsersApi } from '../../api';
-import { SignupDTO } from '../../api';
+import { UserDTO, UsersApi } from '../../../api';
+import { SignupDTO } from '../../../api';
 
 export interface AddUserFormProps {
   onSubmit: (formData: UserDTO) => void;
@@ -30,6 +30,10 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState<formDataType>(initialFormData);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const token: string | null = localStorage.getItem('accessToken');
+    if (!token) {
+      navigate('/');
+    }
 
   const [errors, setErrors] = useState<{ confirmPassword: string; password: string, api: string }>({
     confirmPassword: '',
@@ -92,10 +96,10 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onSubmit }) => {
       }
     } catch (error) {
       console.error('Wystąpił błąd:', error);
-      errors.api = 'Login i/lub hasło są niepoprawne lub użytkownik nie istnieje';
     } finally {
       setIsLoading(false);
       setErrors(errors);
+      navigate(0);
     }
   };
     

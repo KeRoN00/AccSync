@@ -7,6 +7,7 @@ const AdminNavList: React.FC = () => {
     <nav>
             <ul className="list-none flex gap-5 sticky top-0">
                 <NavLink  text="Wyloguj" url="/"/>
+                <NavLink  text="Audyt" url="/audits" />
                 <NavLink  text="Role" url="/roles" />
                 <NavLink  text="Uprawnienia" url="/accesses" />
                 <NavLink  text="Aplikacje" url="/apps" />

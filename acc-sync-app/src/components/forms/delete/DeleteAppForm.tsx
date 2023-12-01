@@ -2,37 +2,37 @@ import React, { FormEvent, useState } from 'react';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import { UsersApi } from '../../api';
-export interface DeleteUserFormProps {
+import { AppsApi } from '../../../api';
+
+export interface DeleteAppFormProps {
   onSubmit: () => void;
   id: number | undefined;
 }
 
-
-const DeleteUserForm: React.FC<DeleteUserFormProps> = ({ onSubmit, id }) => {
+const DeleteAppForm: React.FC<DeleteAppFormProps> = ({ onSubmit, id }) => {
  const navigate = useNavigate();
  const [isLoading, setIsLoading] = useState<boolean>(false);
  const [error, setError] = useState<string|null>(null);
-
+ const token: string | null = localStorage.getItem('accessToken');
+ if (!token) {
+   navigate('/');
+   return;
+ }
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const token: string | null = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/');
-      return;
-    }
+    
     setIsLoading(true);
-
+    
     try {
-      const api = new UsersApi();
+      const api = new AppsApi();
       if(!id) return;
-      await api.apiUsersIdDelete(token, { id: id });
+      await api.apiAppsIdDelete(token, { id: id });
       if (onSubmit) {
         onSubmit();
       }
     } catch (error) {
       console.error('Wystąpił błąd:', error);
-      setError("Błąd podczas usuwania, sprawdź, czy zaznaczyłeś uzytkownika na liście");
+      setError("Błąd podczas usuwania, sprawdź, czy zaznaczyłeś aplikację na liście");
     } finally {
       setIsLoading(false);
       navigate(0);
@@ -48,7 +48,7 @@ const DeleteUserForm: React.FC<DeleteUserFormProps> = ({ onSubmit, id }) => {
 
   return (
     <form onSubmit={handleSubmit} className='max-w-3xl bg-zinc-700 h-screen flex items-center justify-center gap-5 p-3 flex-col' >
-        <h1>Czy napewno chcesz usunąć użytkownika?</h1>
+        <h1>Czy napewno chcesz usunąć aplikację?</h1>
       
           <Button type="submit" variant="contained" color="primary" fullWidth>
             {isLoading ? <CircularProgress/> : "Usuń"}
@@ -61,4 +61,4 @@ const DeleteUserForm: React.FC<DeleteUserFormProps> = ({ onSubmit, id }) => {
   );
 };
 
-export default DeleteUserForm;
+export default DeleteAppForm;

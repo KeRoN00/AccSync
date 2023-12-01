@@ -1,11 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../components/LoginPage";
-import UserDashboard from "../components/UserDashboard";
-import AdminDashboard from "../components/AdminDashboard";
-import Roles from "./Roles";
+import Roles from './Roles';
 import Accesses from "./Accesses";
 import Users from "./Users";
 import Apps from "./Apps";
+import Audits from "./Audits";
 
 export const Router = createBrowserRouter([
     {
@@ -13,12 +12,8 @@ export const Router = createBrowserRouter([
       element: <LoginPage/>,
     },
     {
-      path: "/user-dashboard",
-      element: <UserDashboard/>,
-    },
-    {
-      path: "/admin-dashboard",
-      element: <AdminDashboard/>,
+      path: "/audits",
+      element: <Audits/>,
     },
     {
       path: "/roles",

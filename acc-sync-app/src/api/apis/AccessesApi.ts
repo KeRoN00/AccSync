@@ -83,7 +83,7 @@ export class AccessesApi extends runtime.BaseAPI {
     /**
      * Get all accesses
      */
-    async apiAccessesGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AccessDTO>>> {
+    async apiAccessesGetRaw(token:string,initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AccessDTO>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -95,7 +95,10 @@ export class AccessesApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Accesses`,
             method: 'GET',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
         }, initOverrides);
 
@@ -105,15 +108,15 @@ export class AccessesApi extends runtime.BaseAPI {
     /**
      * Get all accesses
      */
-    async apiAccessesGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AccessDTO>> {
-        const response = await this.apiAccessesGetRaw(initOverrides);
+    async apiAccessesGet(token:string,initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AccessDTO>> {
+        const response = await this.apiAccessesGetRaw(token,initOverrides);
         return await response.value();
     }
 
     /**
      * Delete access by id
      */
-    async apiAccessesIdDeleteRaw(requestParameters: ApiAccessesIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async apiAccessesIdDeleteRaw(token:string,requestParameters: ApiAccessesIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling apiAccessesIdDelete.');
         }
@@ -129,7 +132,10 @@ export class AccessesApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Accesses/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
         }, initOverrides);
 
@@ -139,8 +145,8 @@ export class AccessesApi extends runtime.BaseAPI {
     /**
      * Delete access by id
      */
-    async apiAccessesIdDelete(requestParameters: ApiAccessesIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiAccessesIdDeleteRaw(requestParameters, initOverrides);
+    async apiAccessesIdDelete(token:string,requestParameters: ApiAccessesIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiAccessesIdDeleteRaw(token,requestParameters, initOverrides);
     }
 
     /**
@@ -180,7 +186,7 @@ export class AccessesApi extends runtime.BaseAPI {
     /**
      * Add new access
      */
-    async apiAccessesPostRaw(requestParameters: ApiAccessesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async apiAccessesPostRaw(token:string,requestParameters: ApiAccessesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -194,7 +200,10 @@ export class AccessesApi extends runtime.BaseAPI {
         const response = await this.request({
             path: `/api/Accesses`,
             method: 'POST',
-            headers: headerParameters,
+            headers: {
+                ...headerParameters,
+                'Authorization': `Bearer ${token}`,
+              },
             query: queryParameters,
             body: CreateAccessDTOToJSON(requestParameters.createAccessDTO),
         }, initOverrides);
@@ -205,8 +214,8 @@ export class AccessesApi extends runtime.BaseAPI {
     /**
      * Add new access
      */
-    async apiAccessesPost(requestParameters: ApiAccessesPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.apiAccessesPostRaw(requestParameters, initOverrides);
+    async apiAccessesPost(token:string,requestParameters: ApiAccessesPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.apiAccessesPostRaw(token,requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -101,8 +101,6 @@ export class UsersApi extends runtime.BaseAPI {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
-
-    console.log("w request: ", token);
     const response = await this.request({
       path: `/api/Users`,
       method: "GET",
@@ -113,7 +111,6 @@ export class UsersApi extends runtime.BaseAPI {
       },
       query: queryParameters,
     });
-    console.log("po request: ", response);
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(UserDTOFromJSON)
     );

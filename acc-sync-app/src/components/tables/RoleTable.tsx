@@ -5,16 +5,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { ResponseUserDTO } from "../types/User";
 import { useState } from "react";
-import { UserDTO } from "../api";
+import { RoleDTO } from "../../api";
+import { ResponseRoleDTO } from "../../types/Role";
 
 
 interface BasicTableProps {
-  onUserSelect?: (selectedUser: ResponseUserDTO) => void;
-  data: UserDTO[] // Dodaj nowy prop
+  onRoleSelect?: (selectedRole: ResponseRoleDTO) => void;
+  data: RoleDTO[] // Dodaj nowy prop
 }
-const BasicTable: React.FC<BasicTableProps> = ({ data, onUserSelect }) => {
+const RoleTable: React.FC<BasicTableProps> = ({ data, onRoleSelect }) => {
   const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
 
   const handleRowClick = (rowIndex: number | undefined) => {
@@ -22,18 +22,17 @@ const BasicTable: React.FC<BasicTableProps> = ({ data, onUserSelect }) => {
       return;
     }
     setSelectedRowIndex(rowIndex);
-    const selectedUserData = data.find((row) => row.id === rowIndex);
+    const selectedRoleData = data.find((row) => row.id === rowIndex);
 
-    if (selectedUserData) {
-      const selectedUser: ResponseUserDTO = {
-        id: selectedUserData.id,
-        firstName: selectedUserData!.firstName || null || undefined,
-        lastName: selectedUserData!.lastName || undefined,
-        email: selectedUserData!.email || undefined,
+    if (selectedRoleData) {
+      const selectedRole: ResponseRoleDTO = {
+        id: selectedRoleData.id,
+        name: selectedRoleData!.name || null || undefined,
+        appId: selectedRoleData!.appId || undefined,
       };
-      console.log(selectedUser);
-      if (onUserSelect) {
-        onUserSelect(selectedUser);
+      console.log(selectedRole);
+      if (onRoleSelect) {
+        onRoleSelect(selectedRole);
       }
     }
   };
@@ -50,13 +49,10 @@ const BasicTable: React.FC<BasicTableProps> = ({ data, onUserSelect }) => {
               ID
             </TableCell>
             <TableCell align="right" style={{ color: "white" }}>
-              FirstName
+              Name
             </TableCell>
             <TableCell align="right" style={{ color: "white" }}>
-              LastName
-            </TableCell>
-            <TableCell align="right" style={{ color: "white" }}>
-              E-Mail
+              App_Id
             </TableCell>
           </TableRow>
         </TableHead>
@@ -74,13 +70,10 @@ const BasicTable: React.FC<BasicTableProps> = ({ data, onUserSelect }) => {
                 {row.id}
               </TableCell>
               <TableCell component="th" scope="row" style={{ color: "white" }}>
-                {row.firstName}
+                {row.name}
               </TableCell>
               <TableCell align="right" style={{ color: "white" }}>
-                {row.lastName}
-              </TableCell>
-              <TableCell align="right" style={{ color: "white" }}>
-                {row.email}
+                {row.appId}
               </TableCell>
             </TableRow>
           ))}
@@ -89,4 +82,4 @@ const BasicTable: React.FC<BasicTableProps> = ({ data, onUserSelect }) => {
     </TableContainer>
   );
 };
-export default BasicTable;
+export default RoleTable;
